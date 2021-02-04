@@ -936,8 +936,8 @@ MonoBehaviour:
   unitRotation: 1
   maxUpRotation: 30
   maxDownRotation: -30
-  maxLeftRotation: 120
-  maxRightRotation: 240
+  maxLeftRotation: -60
+  maxRightRotation: 60
 --- !u!4 &494883876
 Transform:
   m_ObjectHideFlags: 0
