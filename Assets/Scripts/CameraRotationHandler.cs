@@ -19,7 +19,7 @@ namespace FireTruckStoreApp
         [SerializeField]
         float maxRightRotation;
         
-        Quaternion ClampRotationAroundXAxis(Quaternion q)
+        Quaternion ClampRotation(Quaternion q)
         {
             q.x /= q.w;
             q.y /= q.w;
@@ -30,6 +30,10 @@ namespace FireTruckStoreApp
             angleX = Mathf.Clamp(angleX, maxDownRotation, maxUpRotation);
             q.x = Mathf.Tan(0.5f * Mathf.Deg2Rad * angleX);
 
+            float angleY = 2.0f * Mathf.Rad2Deg * Mathf.Atan(q.y);
+            angleY = Mathf.Clamp(angleY, maxLeftRotation, maxRightRotation);
+            q.y = Mathf.Tan(0.5f * Mathf.Deg2Rad * angleY);
+            
             return q;
         }
         
@@ -37,28 +41,28 @@ namespace FireTruckStoreApp
         {
             Quaternion quaternion = camera.rotation;
             quaternion *= Quaternion.Euler(unitRotation, 0, 0f);
-            camera.rotation = ClampRotationAroundXAxis(quaternion);
+            camera.rotation = ClampRotation(quaternion);
         }
 
         public void RotateDownwards()
         {
             Quaternion quaternion = camera.rotation;
             quaternion *= Quaternion.Euler(-unitRotation, 0, 0f);
-            camera.rotation = ClampRotationAroundXAxis(quaternion);
+            camera.rotation = ClampRotation(quaternion);
         }
 
         public void RotateLeft()
         {
             Quaternion quaternion = camera.rotation;
             quaternion *= Quaternion.Euler(0f, -unitRotation, 0f);
-            camera.rotation = quaternion;
+            camera.rotation = ClampRotation(quaternion);
         }
 
         public void RotateRight()
         {
             Quaternion quaternion = camera.rotation;
             quaternion *= Quaternion.Euler(0f, unitRotation, 0f);
-            camera.rotation = quaternion;
+            camera.rotation = ClampRotation(quaternion);
         }
     }
 }
