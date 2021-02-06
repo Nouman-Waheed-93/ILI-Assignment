@@ -1,12 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace FireTruckStoreApp
 {
     public class ShaderToggleHandler : MonoBehaviour
     {
-        List<Material> materials = new List<Material>();
+        public class ShaderEvent : UnityEvent<Shader>
+        {
+
+        }
+
+        public static ShaderToggleHandler singleton;
+
+        public ShaderEvent onShaderChanged = new ShaderEvent();
 
         bool shadersOff;
         Shader unlitShader;
@@ -14,35 +22,24 @@ namespace FireTruckStoreApp
 
         private void Awake()
         {
-            MeshRenderer[] renderers = FindObjectsOfType<MeshRenderer>();
-            foreach(MeshRenderer renderer in renderers)
-            {
-                materials.AddRange(renderer.materials);
-            }
             unlitShader = Shader.Find("Unlit/Color");
             defaultShader = Shader.Find("Standard");
+            singleton = this;
         }
 
         public void ToggleShaders()
         {
-            if (shadersOff)
-            {
-                shadersOff = false;
-                ApplyShaderToAll(defaultShader);
-            }
-            else
-            {
-                shadersOff = true;
-                ApplyShaderToAll(unlitShader);
-            }
+            shadersOff = !shadersOff;
+            Shader newShader = GetCurrentShader();
+            onShaderChanged.Invoke(newShader);
         }
 
-        private void ApplyShaderToAll(Shader shader)
+        public Shader GetCurrentShader()
         {
-            foreach(Material material in materials)
-            {
-                material.shader = shader;
-            }
+            if (shadersOff)
+                return unlitShader;
+            else
+                return defaultShader;
         }
     }
 }
