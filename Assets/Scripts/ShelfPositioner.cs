@@ -24,7 +24,7 @@ namespace FireTruckStoreApp
 
         public void MouseDrag()
         {
-            shelf.Move((Input.mousePosition - lastMousePosition).y * Time.deltaTime);
+            shelf.Move(DragHandler.singleton.GetWorldPointOnObjectPlane(transform).y);
         }
     }
 }

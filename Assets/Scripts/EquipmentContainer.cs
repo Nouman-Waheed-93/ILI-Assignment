@@ -19,6 +19,7 @@ namespace FireTruckStoreApp
             if (occupier.Volume.y > HeightOccupied)
                 HeightOccupied = occupier.Volume.y;
             containedEquipment.Add(occupier);
+            occupier.transform.parent = transform;
         }
 
         public void UnoccupySpace(SpaceOccupier occupier)

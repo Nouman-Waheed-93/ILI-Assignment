@@ -47,7 +47,8 @@ namespace FireTruckStoreApp
 
         public void Move(float direction)
         {
-            targetPosition = transform.position + Vector3.up * direction;
+            targetPosition = transform.position;
+            targetPosition.y = direction;
             float maxHeight = GetUpperLimit();
             float minHeight = GetLowerLimit();
             targetPosition.y = Mathf.Clamp(targetPosition.y, minHeight, maxHeight);
