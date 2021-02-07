@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace FireTruckStoreApp
 {
     public class ObjectSpawner : MonoBehaviour
     {
+        public EquipmentSelectionEvent onEquipmentSpawned;
+
         [SerializeField]
         SpaceOccupier boltCutterPrefab;
         [SerializeField]
@@ -36,7 +39,9 @@ namespace FireTruckStoreApp
                 {
                     spawnPosition.y = container.transform.position.y + newObject.Volume.y * 0.5f;
                     newObject.transform.position = spawnPosition;
-                    newObject.GetComponent<Equipment>().Initialize(container);
+                    Equipment equipment = newObject.GetComponent<Equipment>();
+                    equipment.Initialize(container);
+                    onEquipmentSpawned?.Invoke(equipment);
                     break;
                 }
                 containerIndex++;

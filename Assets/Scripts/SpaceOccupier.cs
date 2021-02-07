@@ -8,8 +8,11 @@ namespace FireTruckStoreApp
     {
         [SerializeField]
         MeshRenderer renderer;
-        
-        public Vector3 Volume { get { return renderer.bounds.size; } }
-        
+
+        [SerializeField]
+        private Vector3 volume;
+
+        public Vector3 Volume { get { return volume;} }
+        public Vector3 BoundingBox { get { return renderer.bounds.size; } }
     }
 }

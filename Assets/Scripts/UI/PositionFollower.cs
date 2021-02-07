@@ -6,12 +6,15 @@ namespace FireTruckStoreApp
 {
     public class PositionFollower : MonoBehaviour
     {
+        public Transform target;
+
         [SerializeField]
-        Transform target;
-        
+        Vector3 positionOffset;
+
         private void Update()
         {
-            transform.position = target.position;
+            if(target)
+                transform.position = target.position + positionOffset;
         }
     }
 }

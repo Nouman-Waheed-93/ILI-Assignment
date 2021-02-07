@@ -530,6 +530,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecc8c43616900424f9f778279aa82cdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onEquipmentSpawned:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1882512886}
+        m_MethodName: SelectEquipment
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   boltCutterPrefab: {fileID: 834528930465600598, guid: 42d09c4040380a240b8d6cb55fb2b2b7,
     type: 3}
   fuelTankPrefab: {fileID: 7478328218353911546, guid: ab24e3bf8c68ddc4e8d500f9f35052b4,
@@ -2882,6 +2896,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1921724661}
+  positionOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &1177064242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4443,6 +4458,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f23d58af2eec4f4b832b961c19a6083, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onSelectedEquipment:
+    m_PersistentCalls:
+      m_Calls: []
+  onUnselectedEquipment:
+    m_PersistentCalls:
+      m_Calls: []
+  onDragStarted:
+    m_PersistentCalls:
+      m_Calls: []
+  onDragEnded:
+    m_PersistentCalls:
+      m_Calls: []
   camera: {fileID: 963194227}
   dragLayer:
     serializedVersion: 2
@@ -4450,7 +4477,6 @@ MonoBehaviour:
   equipmentLayer:
     serializedVersion: 2
     m_Bits: 512
-  activeEquipment: {fileID: 0}
 --- !u!4 &1882512887
 Transform:
   m_ObjectHideFlags: 0
@@ -4604,6 +4630,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1411304715}
+  positionOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &2001630083
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4939,3 +4966,77 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 157245076511523477}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1586491582432264951
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1586491581976921097, guid: d1d809718ce0be842bcbb357d3dec389,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -146.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1586491581976921097, guid: d1d809718ce0be842bcbb357d3dec389,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -13.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1586491581976921097, guid: d1d809718ce0be842bcbb357d3dec389,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 13.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1586491581976921097, guid: d1d809718ce0be842bcbb357d3dec389,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1586491581976921097, guid: d1d809718ce0be842bcbb357d3dec389,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1586491581976921097, guid: d1d809718ce0be842bcbb357d3dec389,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1586491581976921097, guid: d1d809718ce0be842bcbb357d3dec389,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1586491581976921097, guid: d1d809718ce0be842bcbb357d3dec389,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1586491581976921097, guid: d1d809718ce0be842bcbb357d3dec389,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1586491581976921097, guid: d1d809718ce0be842bcbb357d3dec389,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1586491581976921097, guid: d1d809718ce0be842bcbb357d3dec389,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1586491581976921098, guid: d1d809718ce0be842bcbb357d3dec389,
+        type: 3}
+      propertyPath: m_Name
+      value: ObjectRotationArrows
+      objectReference: {fileID: 0}
+    - target: {fileID: 1586491582432264955, guid: d1d809718ce0be842bcbb357d3dec389,
+        type: 3}
+      propertyPath: positionOffset.y
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d1d809718ce0be842bcbb357d3dec389, type: 3}

@@ -61,6 +61,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   renderer: {fileID: 1565184998570604505}
+  volume: {x: 77.64, y: 4.8, z: 18.8}
 --- !u!114 &1154485038433494774
 MonoBehaviour:
   m_ObjectHideFlags: 0

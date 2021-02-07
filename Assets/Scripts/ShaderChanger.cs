@@ -7,6 +7,8 @@ namespace FireTruckStoreApp
     public class ShaderChanger : MonoBehaviour
     {
         MeshRenderer renderer;
+        [SerializeField]
+        List<int> ignoreMaterialIndexes;
 
         private void Awake()
         {
@@ -22,9 +24,12 @@ namespace FireTruckStoreApp
 
         private void ChangeShader(Shader shader)
         {
-            foreach(Material material in renderer.materials)
+            for(int materialIndex = 0; materialIndex < renderer.materials.Length; materialIndex++)
             {
-                material.shader = shader;
+                if (!ignoreMaterialIndexes.Contains(materialIndex))
+                {
+                    renderer.materials[materialIndex].shader = shader;
+                }
             }
         }
     }
