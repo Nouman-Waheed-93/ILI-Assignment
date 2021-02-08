@@ -8,7 +8,7 @@ namespace FireTruckStoreApp
     {
         [SerializeField]
         MovableShelf shelf;
-
+        
         Vector3 lastMousePosition;
 
         public void MouseDown()

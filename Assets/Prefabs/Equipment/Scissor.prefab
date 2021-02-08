@@ -74,6 +74,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc00a292ba9cfaf408c214b2ed6bb2ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  placingMethods: 0100000002000000
 --- !u!65 &5008773620678667445
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -182,3 +183,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75167b46a5752b042a54c6021405033a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ignoreMaterialIndexes: 

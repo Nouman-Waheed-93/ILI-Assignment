@@ -44,12 +44,14 @@ namespace FireTruckStoreApp
         
         public void Rotate(float direction)
         {
-            Vector3 eulers = transform.rotation.eulerAngles;
-            eulers.y += direction;
-            Quaternion rotation = Quaternion.Euler(eulers);
+            Vector3 rotationEulers = new Vector3(0, direction, 0);
+            transform.Rotate(rotationEulers, Space.Self);
+            Quaternion rotation = transform.rotation;
 
             if (target)
                 target.Rotate(rotation);
+
+            transform.Rotate(-rotationEulers, Space.Self);
         }
 
         public void RotationEnded()

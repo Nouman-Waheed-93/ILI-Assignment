@@ -6,6 +6,13 @@ namespace FireTruckStoreApp
 {
     public class EquipmentContainer : MonoBehaviour
     {
+        public enum ContainerType { backWall, shelf}
+
+        public ContainerType containerType;
+
+        [SerializeField]
+        List<PlacingMethod> placingMethods; //the methods with whcich an equipment can be placed in this container
+        
         [SerializeField]
         Vector3 capacity;
 
@@ -13,6 +20,11 @@ namespace FireTruckStoreApp
         public float HeightOccupied { get; private set; }
 
         List<SpaceOccupier> containedEquipment = new List<SpaceOccupier>();
+
+        public bool IsPlacingMethodSupported(PlacingMethod placingMethod)
+        {
+            return placingMethods.Contains(placingMethod);
+        }
 
         public void OccupySpace(SpaceOccupier occupier)
         {
