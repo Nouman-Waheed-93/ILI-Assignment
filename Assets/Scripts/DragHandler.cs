@@ -20,8 +20,8 @@ namespace FireTruckStoreApp
         LayerMask dragLayer;
         public LayerMask equipmentLayer;
 
-        Equipment activeEquipment;
-        Equipment selectedEquipment;
+        Equipment activeEquipment; //the equipment that is being dragged
+        Equipment selectedEquipment; //the equipment that is selected i.e. was last clicked on
         bool dragActive;
 
         #region Unity Callbacks

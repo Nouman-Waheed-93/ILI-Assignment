@@ -8,6 +8,10 @@ namespace FireTruckStoreApp
     public class ObjectSpawner : MonoBehaviour
     {
         public EquipmentSelectionEvent onEquipmentSpawned;
+        public UnityEvent onFuelTankSpawned;
+        public UnityEvent onFuelTankDeleted;
+        public UnityEvent onBoltCutterSpawned;
+        public UnityEvent onBoltCutterDeleted;
 
         [SerializeField]
         SpaceOccupier boltCutterPrefab;
@@ -17,18 +21,35 @@ namespace FireTruckStoreApp
         EquipmentContainer[] containers;
         [SerializeField]
         Transform spawnPoint;
-
+        
         public void SpawnBoltCutter()
         {
-            SpawnObject(Instantiate<SpaceOccupier>(boltCutterPrefab));
+            SpaceOccupier newBoltCutter = Instantiate<SpaceOccupier>(boltCutterPrefab);
+            newBoltCutter.GetComponent<Equipment>().onDelete.AddListener(OnBoltCutterDeleted);
+            if (SpawnObject(newBoltCutter))
+                onBoltCutterSpawned?.Invoke();
         }
 
         public void SpawnFuelTank()
         {
-            SpawnObject(Instantiate<SpaceOccupier>(fuelTankPrefab));
+            SpaceOccupier newFuelTank = Instantiate<SpaceOccupier>(fuelTankPrefab);
+            newFuelTank.GetComponent<Equipment>().onDelete.AddListener(OnFuelTankDeleted);
+            if (SpawnObject(newFuelTank))
+                onFuelTankSpawned?.Invoke();
         }
 
-        private void SpawnObject(SpaceOccupier newObject)
+        private void OnFuelTankDeleted(Equipment fuelTank)
+        {
+            onFuelTankDeleted?.Invoke();
+        }
+
+        private void OnBoltCutterDeleted(Equipment boltCutter)
+        {
+            onBoltCutterDeleted?.Invoke();
+        }
+
+        //returns true if spawned successfully
+        private bool SpawnObject(SpaceOccupier newObject)
         {
             int containerIndex = 0;
             Vector3 spawnPosition = spawnPoint.position;
@@ -42,14 +63,17 @@ namespace FireTruckStoreApp
                     Equipment equipment = newObject.GetComponent<Equipment>();
                     equipment.Initialize(container);
                     onEquipmentSpawned?.Invoke(equipment);
-                    break;
+                    return true;
+//                    break;
                 }
                 containerIndex++;
                 if(containerIndex >= containers.Length)
                 {
                     Destroy(newObject.gameObject);
+                    return false;
                 }
             }
+            return true;
         }
     }
 }

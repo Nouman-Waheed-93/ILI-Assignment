@@ -13,6 +13,6 @@ namespace FireTruckStoreApp
         private Vector3 volume;
 
         public Vector3 Volume { get { return volume;} }
-        public Vector3 BoundingBox { get { return renderer.bounds.size; } }
+        public Bounds BoundingBox { get { return renderer.bounds; } }
     }
 }

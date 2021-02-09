@@ -9,12 +9,9 @@ namespace FireTruckStoreApp
         [SerializeField]
         MovableShelf shelf;
         
-        Vector3 lastMousePosition;
-
         public void MouseDown()
         {
             shelf.StartMoving();
-            lastMousePosition = Input.mousePosition;
         }
 
         public void MouseUp()

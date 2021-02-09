@@ -18,25 +18,14 @@ namespace FireTruckStoreApp
         float maxLeftRotation;
         [SerializeField]
         float maxRightRotation;
-        
-        Quaternion ClampRotation(Quaternion q)
+
+        Quaternion initialRotation;
+
+        public void ResetRotation()
         {
-            q.x /= q.w;
-            q.y /= q.w;
-            q.z /= q.w;
-            q.w = 1.0f;
-
-            float angleX = 2.0f * Mathf.Rad2Deg * Mathf.Atan(q.x);
-            angleX = Mathf.Clamp(angleX, maxDownRotation, maxUpRotation);
-            q.x = Mathf.Tan(0.5f * Mathf.Deg2Rad * angleX);
-
-            float angleY = 2.0f * Mathf.Rad2Deg * Mathf.Atan(q.y);
-            angleY = Mathf.Clamp(angleY, maxLeftRotation, maxRightRotation);
-            q.y = Mathf.Tan(0.5f * Mathf.Deg2Rad * angleY);
-            
-            return q;
+            camera.rotation = initialRotation;
         }
-        
+
         public void RotateUpwards()
         {
             Quaternion quaternion = camera.rotation;
@@ -63,6 +52,24 @@ namespace FireTruckStoreApp
             Quaternion quaternion = camera.rotation;
             quaternion *= Quaternion.Euler(0f, unitRotation, 0f);
             camera.rotation = ClampRotation(quaternion);
+        }
+
+        private Quaternion ClampRotation(Quaternion q)
+        {
+            q.x /= q.w;
+            q.y /= q.w;
+            q.z /= q.w;
+            q.w = 1.0f;
+
+            float angleX = 2.0f * Mathf.Rad2Deg * Mathf.Atan(q.x);
+            angleX = Mathf.Clamp(angleX, maxDownRotation, maxUpRotation);
+            q.x = Mathf.Tan(0.5f * Mathf.Deg2Rad * angleX);
+
+            float angleY = 2.0f * Mathf.Rad2Deg * Mathf.Atan(q.y);
+            angleY = Mathf.Clamp(angleY, maxLeftRotation, maxRightRotation);
+            q.y = Mathf.Tan(0.5f * Mathf.Deg2Rad * angleY);
+
+            return q;
         }
     }
 }
