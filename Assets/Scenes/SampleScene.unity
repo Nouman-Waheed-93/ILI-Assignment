@@ -512,6 +512,7 @@ GameObject:
   - component: {fileID: 186988999}
   - component: {fileID: 186989001}
   - component: {fileID: 186989000}
+  - component: {fileID: 186989002}
   m_Layer: 5
   m_Name: Can'tSpawnMessage
   m_TagString: Untagged
@@ -575,6 +576,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 186988998}
   m_CullTransparentMesh: 0
+--- !u!114 &186989002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 186988998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87eaab3a620e5e84fafb75c47633643c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeSpan: 3
 --- !u!1 &219563823
 GameObject:
   m_ObjectHideFlags: 0
@@ -673,6 +687,20 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
+        m_CallState: 2
+  onSpawnFailed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 186989002}
+        m_MethodName: ShowUp
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
         m_CallState: 2
   boltCutterPrefab: {fileID: 834528930465600598, guid: 42d09c4040380a240b8d6cb55fb2b2b7,
     type: 3}
@@ -2159,6 +2187,7 @@ GameObject:
   - component: {fileID: 626595001}
   - component: {fileID: 626595003}
   - component: {fileID: 626595002}
+  - component: {fileID: 626595004}
   m_Layer: 5
   m_Name: SpaceTakenByAnotherGameObject
   m_TagString: Untagged
@@ -2184,7 +2213,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 60}
+  m_SizeDelta: {x: 300, y: 60}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &626595002
 MonoBehaviour:
@@ -2222,6 +2251,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 626595000}
   m_CullTransparentMesh: 0
+--- !u!114 &626595004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 626595000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87eaab3a620e5e84fafb75c47633643c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeSpan: 1
 --- !u!1 &650387971
 GameObject:
   m_ObjectHideFlags: 0
@@ -4318,7 +4360,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Can't move here. This place is occupied by another gameObject.
+  m_Text: Can't move here. This place  is either occupied by another gameObject or
+    the container has not enough space.
 --- !u!222 &1295025115
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5946,6 +5989,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f23d58af2eec4f4b832b961c19a6083, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onObjectMoveFailed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 626595004}
+        m_MethodName: ShowUp
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onSelectedObject:
     m_PersistentCalls:
       m_Calls: []

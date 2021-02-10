@@ -71,24 +71,25 @@ namespace FireTruckStoreApp
                 transform.rotation = rotation;
         }
 
-        public void Move(Vector3 position, EquipmentContainer container)
+        //returns true if moved successfully
+        public bool Move(Vector3 position, EquipmentContainer container)
         {
             if (isPlaced)
-                return;
+                return false;
 
             Vector3 newPosition = position + new Vector3(0, spaceOccupier.Volume.y * 0.5f, 0);
             newPosition = Utility.KeepPositionInsideContainer(spaceOccupier, newPosition, container);
 
             if (Utility.OverlapsOtherEquipment(spaceOccupier, newPosition, transform.rotation, container))
-                return;
+                return false;
 
             if (container.Capacity.y < spaceOccupier.Volume.y)
-                return;
+                return false;
 
             if (container != currentContainer)
             {
                 if (!CanBePlacedInContainer(container))
-                    return;
+                    return false;
 
                 SetCommonPlacingMethods(container);
                 currentContainer.UnoccupySpace(spaceOccupier);
@@ -98,6 +99,7 @@ namespace FireTruckStoreApp
             }
             boundingBoxRenderer.SetRightMaterial();
             transform.position = newPosition;
+            return true;
         }
 
         #endregion

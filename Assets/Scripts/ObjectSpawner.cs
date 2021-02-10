@@ -13,6 +13,7 @@ namespace FireTruckStoreApp
         public UnityEvent onFuelTankDeleted;
         public UnityEvent onBoltCutterSpawned;
         public UnityEvent onBoltCutterDeleted;
+        public UnityEvent onSpawnFailed;
 
         [SerializeField]
         SpaceOccupier boltCutterPrefab;
@@ -36,6 +37,8 @@ namespace FireTruckStoreApp
             newBoltCutter.GetComponent<DeleteableGameObject>().onDelete.AddListener(OnBoltCutterDeleted);
             if (SpawnObject(newBoltCutter))
                 onBoltCutterSpawned?.Invoke();
+            else
+                onSpawnFailed?.Invoke();
         }
 
         public void SpawnFuelTank()
@@ -44,6 +47,8 @@ namespace FireTruckStoreApp
             newFuelTank.GetComponent<DeleteableGameObject>().onDelete.AddListener(OnFuelTankDeleted);
             if (SpawnObject(newFuelTank))
                 onFuelTankSpawned?.Invoke();
+            else
+                onSpawnFailed?.Invoke();
         }
 
         public void PlaceInIronBox(Equipment equipment)

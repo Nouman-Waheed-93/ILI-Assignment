@@ -8,7 +8,8 @@ namespace FireTruckStoreApp
     public class DragHandler : MonoBehaviour
     {
         public static DragHandler singleton;
-        
+
+        public UnityEvent onObjectMoveFailed;
         public GameObjectEvent onSelectedObject;
         public GameObjectEvent onUnselectedObject;
         public UnityEvent onDragStarted;
@@ -48,7 +49,8 @@ namespace FireTruckStoreApp
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit, int.MaxValue, dragLayer))
                 {
-                    activeEquipment.Move(hit.point, hit.collider.GetComponentInParent<EquipmentContainer>());
+                    if (!activeEquipment.Move(hit.point, hit.collider.GetComponentInParent<EquipmentContainer>()))
+                        onObjectMoveFailed?.Invoke();
                 }
             }
             else if (Input.GetMouseButtonDown(0))
