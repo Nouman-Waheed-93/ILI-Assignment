@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 834528930465600598}
   - component: {fileID: 1154485038433494774}
   - component: {fileID: 5008773620678667445}
+  - component: {fileID: -7326048226315317939}
   m_Layer: 9
   m_Name: Scissor
   m_TagString: Untagged
@@ -88,6 +89,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 77.64943, y: 4.8059616, z: 18.817373}
   m_Center: {x: 0.022006989, y: 0, z: 0}
+--- !u!114 &-7326048226315317939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4102571600700714705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c407b62066d6395458b67e5ad66b2604, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onDelete:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &7557895104433212236
 GameObject:
   m_ObjectHideFlags: 0

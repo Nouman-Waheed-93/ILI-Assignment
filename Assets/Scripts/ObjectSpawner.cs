@@ -7,7 +7,8 @@ namespace FireTruckStoreApp
 {
     public class ObjectSpawner : MonoBehaviour
     {
-        public EquipmentSelectionEvent onEquipmentSpawned;
+        public static ObjectSpawner singleton;
+        public GameObjectEvent onEquipmentSpawned;
         public UnityEvent onFuelTankSpawned;
         public UnityEvent onFuelTankDeleted;
         public UnityEvent onBoltCutterSpawned;
@@ -18,14 +19,21 @@ namespace FireTruckStoreApp
         [SerializeField]
         SpaceOccupier fuelTankPrefab;
         [SerializeField]
+        SpaceOccupier ironBoxPrefab;
+        [SerializeField]
         EquipmentContainer[] containers;
         [SerializeField]
         Transform spawnPoint;
-        
+
+        private void Awake()
+        {
+            singleton = this;
+        }
+
         public void SpawnBoltCutter()
         {
             SpaceOccupier newBoltCutter = Instantiate<SpaceOccupier>(boltCutterPrefab);
-            newBoltCutter.GetComponent<Equipment>().onDelete.AddListener(OnBoltCutterDeleted);
+            newBoltCutter.GetComponent<DeleteableGameObject>().onDelete.AddListener(OnBoltCutterDeleted);
             if (SpawnObject(newBoltCutter))
                 onBoltCutterSpawned?.Invoke();
         }
@@ -33,17 +41,27 @@ namespace FireTruckStoreApp
         public void SpawnFuelTank()
         {
             SpaceOccupier newFuelTank = Instantiate<SpaceOccupier>(fuelTankPrefab);
-            newFuelTank.GetComponent<Equipment>().onDelete.AddListener(OnFuelTankDeleted);
+            newFuelTank.GetComponent<DeleteableGameObject>().onDelete.AddListener(OnFuelTankDeleted);
             if (SpawnObject(newFuelTank))
                 onFuelTankSpawned?.Invoke();
         }
 
-        private void OnFuelTankDeleted(Equipment fuelTank)
+        public void PlaceInIronBox(Equipment equipment)
+        {
+            SpaceOccupier ironBox = Instantiate(ironBoxPrefab);
+            equipment.GetComponent<Collider>().enabled = false;
+            ironBox.transform.position = equipment.transform.position;
+            ironBox.transform.rotation = equipment.transform.rotation;
+            ironBox.transform.position = Utility.KeepPositionInsideContainer(ironBox, equipment.transform.position, equipment.currentContainer);
+            equipment.currentContainer.OccupySpace(ironBox);
+        }
+
+        private void OnFuelTankDeleted(GameObject fuelTank)
         {
             onFuelTankDeleted?.Invoke();
         }
 
-        private void OnBoltCutterDeleted(Equipment boltCutter)
+        private void OnBoltCutterDeleted(GameObject boltCutter)
         {
             onBoltCutterDeleted?.Invoke();
         }
@@ -62,7 +80,7 @@ namespace FireTruckStoreApp
                     newObject.transform.position = spawnPosition;
                     Equipment equipment = newObject.GetComponent<Equipment>();
                     equipment.Initialize(container);
-                    onEquipmentSpawned?.Invoke(equipment);
+                    onEquipmentSpawned?.Invoke(equipment.gameObject);
                     return true;
 //                    break;
                 }

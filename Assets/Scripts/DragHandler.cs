@@ -9,8 +9,8 @@ namespace FireTruckStoreApp
     {
         public static DragHandler singleton;
         
-        public EquipmentSelectionEvent onSelectedEquipment;
-        public EquipmentSelectionEvent onUnselectedEquipment;
+        public GameObjectEvent onSelectedObject;
+        public GameObjectEvent onUnselectedObject;
         public UnityEvent onDragStarted;
         public UnityEvent onDragEnded;
 
@@ -21,7 +21,7 @@ namespace FireTruckStoreApp
         public LayerMask equipmentLayer;
 
         Equipment activeEquipment; //the equipment that is being dragged
-        Equipment selectedEquipment; //the equipment that is selected i.e. was last clicked on
+        GameObject selectedObject; //the equipment that is selected i.e. was last clicked on
         bool dragActive;
 
         #region Unity Callbacks
@@ -59,7 +59,7 @@ namespace FireTruckStoreApp
                 {
                     activeEquipment = hit.collider.GetComponent<Equipment>();
                     onDragStarted?.Invoke();
-                    SelectEquipment(activeEquipment);
+                    SelectGameObject(hit.collider.gameObject);
                 }
             }
         }
@@ -85,14 +85,14 @@ namespace FireTruckStoreApp
 
         public void UnselectEquipment()
         {
-            onUnselectedEquipment?.Invoke(selectedEquipment);
-            selectedEquipment = null;
+            onUnselectedObject?.Invoke(selectedObject);
+            selectedObject = null;
         }
 
-        public void SelectEquipment(Equipment equipment)
+        public void SelectGameObject(GameObject selectedObject)
         {
-            selectedEquipment = equipment;
-            onSelectedEquipment?.Invoke(equipment);
+            this.selectedObject = selectedObject;
+            onSelectedObject?.Invoke(selectedObject);
         }
         #endregion
 

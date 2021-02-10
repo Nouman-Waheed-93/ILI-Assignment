@@ -1,32 +1,45 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace FireTruckStoreApp
 {
     public class ObjectDeleteButton : MonoBehaviour
     {
-        Equipment targetEqupment;
+        DeleteableGameObject targetDeleteable;
+        Button button;
+
+        private void Awake()
+        {
+            button = GetComponent<Button>();
+        }
 
         private void Start()
         {
-            DragHandler.singleton.onSelectedEquipment.AddListener(OnSelectedEquipment);
-            DragHandler.singleton.onUnselectedEquipment.AddListener(OnUnselectedEquipment);
+            button = GetComponent<Button>();
+            DragHandler.singleton.onSelectedObject.AddListener(OnSelectedObject);
+            DragHandler.singleton.onUnselectedObject.AddListener(OnUnselectedObject);
         }
 
         public void DeleteTarget()
         {
-            targetEqupment.Delete();
+            targetDeleteable.Delete();
         }
 
-        private void OnSelectedEquipment(Equipment equipment)
+        private void OnSelectedObject(GameObject selectedGameObject)
         {
-            targetEqupment = equipment;
+            if (selectedGameObject.TryGetComponent<DeleteableGameObject>(out targetDeleteable))
+            {
+                gameObject.SetActive(true);
+                button.interactable = true;
+            }
         }
 
-        private void OnUnselectedEquipment(Equipment equipment)
+        private void OnUnselectedObject(GameObject unselectedGameObject)
         {
-            targetEqupment = null;
+            targetDeleteable = null;
+            gameObject.SetActive(false);
         }
     }
 }

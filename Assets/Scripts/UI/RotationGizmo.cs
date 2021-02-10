@@ -12,8 +12,8 @@ namespace FireTruckStoreApp
         private void Start()
         {
             DragHandler dragHandler = DragHandler.singleton;
-            dragHandler.onSelectedEquipment.AddListener(SetTarget);
-            dragHandler.onUnselectedEquipment.AddListener(TargetUnselected);
+            dragHandler.onSelectedObject.AddListener(SetTarget);
+            dragHandler.onUnselectedObject.AddListener(TargetUnselected);
             dragHandler.onDragStarted.AddListener(Disactivate);
             dragHandler.onDragEnded.AddListener(Activate);
             Disactivate();
@@ -31,17 +31,18 @@ namespace FireTruckStoreApp
                 transform.rotation = this.target.transform.rotation;
         }
 
-        public void SetTarget(Equipment equipment)
+        public void SetTarget(GameObject selectedGameObject)
         {
-            if (!equipment.isPlaced)
+            Equipment selectedEquipment = selectedGameObject.GetComponent<Equipment>();
+            if (selectedEquipment && !selectedEquipment.isPlaced)
             {
-                this.target = equipment;
+                this.target = selectedEquipment;
                 follower.target = target.transform;
                 Activate();
             }
         }
 
-        public void TargetUnselected(Equipment equipment)
+        public void TargetUnselected(GameObject unselectedGameObject)
         {
             Disactivate();
         }

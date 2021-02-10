@@ -6,13 +6,12 @@ namespace FireTruckStoreApp
 {
     public class Equipment : MonoBehaviour
     {
-        public EquipmentSelectionEvent onDelete;
         public bool isPlaced { get; private set; }
+        public EquipmentContainer currentContainer { get; private set; }
         [SerializeField]
         List<PlacingMethod> placingMethods; //the methods with which this equipment can be placed in a container
 
         SpaceOccupier spaceOccupier;
-        EquipmentContainer currentContainer;
         BoundingBoxRenderer boundingBoxRenderer;
 
         List<PlacingMethod> commonPlacingMethodsWithContainer = new List<PlacingMethod>();
@@ -32,7 +31,7 @@ namespace FireTruckStoreApp
             currentContainer = container;
             currentContainer.OccupySpace(spaceOccupier);
             SetCommonPlacingMethods(container);
-            if(OverlapsOtherEquipment(transform.position, transform.rotation, container))
+            if(Utility.OverlapsOtherEquipment(spaceOccupier, transform.position, transform.rotation, container))
             {
                 boundingBoxRenderer.SetWrongMaterial();
             }
@@ -64,8 +63,8 @@ namespace FireTruckStoreApp
         {
             if (isPlaced)
                 return;
-
-            if (OverlapsOtherEquipment(transform.position, rotation, currentContainer))
+            
+            if (Utility.OverlapsOtherEquipment(spaceOccupier, transform.position, rotation, currentContainer))
                 return;
             
             if(IsRotationInsideContainer(rotation))
@@ -78,9 +77,9 @@ namespace FireTruckStoreApp
                 return;
 
             Vector3 newPosition = position + new Vector3(0, spaceOccupier.Volume.y * 0.5f, 0);
-            newPosition = KeepPositionInsideContainer(newPosition, container);
+            newPosition = Utility.KeepPositionInsideContainer(spaceOccupier, newPosition, container);
 
-            if (OverlapsOtherEquipment(newPosition, transform.rotation, container))
+            if (Utility.OverlapsOtherEquipment(spaceOccupier, newPosition, transform.rotation, container))
                 return;
 
             if (container.Capacity.y < spaceOccupier.Volume.y)
@@ -101,11 +100,6 @@ namespace FireTruckStoreApp
             transform.position = newPosition;
         }
 
-        public void Delete()
-        {
-            onDelete.Invoke(this);
-            Destroy(gameObject);
-        }
         #endregion
 
         #region Private Methods
@@ -128,21 +122,6 @@ namespace FireTruckStoreApp
                     return true;
             }
             return false;
-        }
-
-        private bool OverlapsOtherEquipment(Vector3 newPosition, Quaternion newRotation, EquipmentContainer container)
-        {
-            Collider[] colliders = Physics.OverlapBox(newPosition, spaceOccupier.Volume * 0.5f, newRotation, DragHandler.singleton.equipmentLayer);
-            
-            bool overlaps = true;
-
-            if (colliders.Length == 1)
-                overlaps = colliders[0].gameObject != gameObject;
-
-            if (colliders.Length == 0)
-                overlaps = false;
-
-            return overlaps ;
         }
 
         private bool IsRotationInsideContainer(Quaternion rotation)
@@ -185,51 +164,6 @@ namespace FireTruckStoreApp
             return contains;
         }
 
-        private Vector3 KeepPositionInsideContainer(Vector3 newPosition, EquipmentContainer container)
-        {
-            Vector3 clampedPosition = newPosition;
-            Vector3 containerCenter = Vector3.zero;
-
-            if (container.containerType == EquipmentContainer.ContainerType.shelf)
-                containerCenter = container.transform.position + Vector3.up * container.Capacity.y;
-            else
-                containerCenter = container.transform.position + container.transform.up * container.Capacity.z;
-
-            Bounds containerBounds = new Bounds(containerCenter, container.Capacity);
-
-            Vector3 halfVolume = spaceOccupier.BoundingBox.extents;
-
-            Vector3 maxEquipmentBound = newPosition + halfVolume;
-            Vector3 minEquipmentBound = newPosition - halfVolume;
-
-            if (containerBounds.max.x < maxEquipmentBound.x)
-                clampedPosition.x = containerBounds.max.x - halfVolume.x;
-
-            if (containerBounds.min.x > minEquipmentBound.x)
-                clampedPosition.x = containerBounds.min.x + halfVolume.x;
-
-            switch (container.containerType) {
-                case EquipmentContainer.ContainerType.shelf:
-                    {
-                        if (containerBounds.max.z < maxEquipmentBound.z)
-                            clampedPosition.z = containerBounds.max.z - halfVolume.z;
-
-                        if (containerBounds.min.z > minEquipmentBound.z)
-                            clampedPosition.z = containerBounds.min.z + halfVolume.z;
-                        break;
-                    }
-                case EquipmentContainer.ContainerType.backWall:
-                    {
-                        if (containerBounds.max.y < maxEquipmentBound.y)
-                            clampedPosition.y = containerBounds.max.y - halfVolume.y;
-
-                        if (containerBounds.min.y > minEquipmentBound.y)
-                            clampedPosition.y = containerBounds.min.y + halfVolume.y;
-                        break;
-                    }
-            }
-            return clampedPosition;
-        }
         #endregion
     }
 }

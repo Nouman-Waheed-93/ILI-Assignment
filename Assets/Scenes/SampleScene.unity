@@ -534,7 +534,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1882512886}
-        m_MethodName: SelectEquipment
+        m_MethodName: SelectGameObject
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -603,6 +603,8 @@ MonoBehaviour:
   boltCutterPrefab: {fileID: 834528930465600598, guid: 42d09c4040380a240b8d6cb55fb2b2b7,
     type: 3}
   fuelTankPrefab: {fileID: 7478328218353911546, guid: ab24e3bf8c68ddc4e8d500f9f35052b4,
+    type: 3}
+  ironBoxPrefab: {fileID: 3124555421097232630, guid: 5d96515c6ac8f0d4fb58338584020970,
     type: 3}
   containers:
   - {fileID: 31415708}
@@ -1385,7 +1387,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   positionOffset: {x: -10, y: 5, z: 0}
-  activeForPlacedObject: 1
 --- !u!114 &432054591
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4267,7 +4268,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   positionOffset: {x: 10, y: 5, z: 0}
-  activeForPlacedObject: 0
 --- !u!114 &1353355447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5641,10 +5641,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f23d58af2eec4f4b832b961c19a6083, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onSelectedEquipment:
+  onSelectedObject:
     m_PersistentCalls:
       m_Calls: []
-  onUnselectedEquipment:
+  onUnselectedObject:
     m_PersistentCalls:
       m_Calls: []
   onDragStarted:

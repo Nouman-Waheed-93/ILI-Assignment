@@ -6,19 +6,17 @@ namespace FireTruckStoreApp
 {
     public class TopLeftBoundPositioner : MonoBehaviour
     {
+        SpaceOccupier target;
+
         [SerializeField]
         Vector3 positionOffset;
-        [SerializeField]
-        bool activeForPlacedObject;
-
-        SpaceOccupier target;
 
         private void Start()
         {
-            DragHandler.singleton.onSelectedEquipment.AddListener(OnTargetSelected);
-            DragHandler.singleton.onUnselectedEquipment.AddListener(OnTargetUnselected);
+            DragHandler.singleton.onSelectedObject.AddListener(OnSelectedObject);
+            DragHandler.singleton.onUnselectedObject.AddListener(OnUnselectedObject);
         }
-        
+
         void Update()
         {
             if (target)
@@ -28,19 +26,14 @@ namespace FireTruckStoreApp
             }
         }
         
-        private void OnTargetSelected(Equipment equipment)
+        private void OnSelectedObject(GameObject selectedGameObject)
         {
-            if (!equipment.isPlaced || activeForPlacedObject)
-            {
-                target = equipment.GetComponent<SpaceOccupier>();
-                gameObject.SetActive(true);
-            }
+            selectedGameObject.TryGetComponent<SpaceOccupier>(out target);
         }
 
-        private void OnTargetUnselected(Equipment equipment)
+        private void OnUnselectedObject(GameObject unselectedGameObject)
         {
             target = null;
-            gameObject.SetActive(false);
         }
     }
 }

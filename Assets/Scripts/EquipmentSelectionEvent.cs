@@ -6,7 +6,13 @@ using UnityEngine.Events;
 namespace FireTruckStoreApp
 {
     [System.Serializable]
-    public class EquipmentSelectionEvent : UnityEvent<Equipment>
+    public class EquipmentEvent : UnityEvent<Equipment>
+    {
+
+    }
+
+    [System.Serializable]
+    public class GameObjectEvent : UnityEvent<GameObject>
     {
 
     }

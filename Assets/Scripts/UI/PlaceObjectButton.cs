@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace FireTruckStoreApp
 {
@@ -9,12 +10,19 @@ namespace FireTruckStoreApp
         [SerializeField]
         PlacementMenu placementMenu;
 
+        Button button;
+
         Equipment targetEqupment;
+
+        private void Awake()
+        {
+            button = GetComponent<Button>();
+        }
 
         private void Start()
         {
-            DragHandler.singleton.onSelectedEquipment.AddListener(OnSelectedEquipment);
-            DragHandler.singleton.onUnselectedEquipment.AddListener(OnUnselectedEquipment);
+            DragHandler.singleton.onSelectedObject.AddListener(OnSelectedEquipment);
+            DragHandler.singleton.onUnselectedObject.AddListener(OnUnselectedEquipment);
         }
 
         public void PlaceObject()
@@ -28,14 +36,21 @@ namespace FireTruckStoreApp
             DragHandler.singleton.UnselectEquipment();
         }
 
-        private void OnSelectedEquipment(Equipment equipment)
+        private void OnSelectedEquipment(GameObject selectedGameObject)
         {
-            targetEqupment = equipment;
+            Equipment equipment = selectedGameObject.GetComponent<Equipment>();
+            if (equipment)
+            {
+                targetEqupment = equipment;
+                gameObject.SetActive(true);
+                button.interactable = !targetEqupment.isPlaced;
+            }
         }
 
-        private void OnUnselectedEquipment(Equipment equipment)
+        private void OnUnselectedEquipment(GameObject unselectedGameObject)
         {
             targetEqupment = null;
+            gameObject.SetActive(false);
         }
     }
 }

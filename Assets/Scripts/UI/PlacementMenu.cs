@@ -49,6 +49,7 @@ namespace FireTruckStoreApp
         public void PlaceWithBox()
         {
             equipment.FixPosition();
+            ObjectSpawner.singleton.PlaceInIronBox(equipment);
             gameObject.SetActive(false);
         }
 
