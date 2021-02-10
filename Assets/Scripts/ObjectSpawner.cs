@@ -61,12 +61,13 @@ namespace FireTruckStoreApp
             ironBox.transform.rotation = equipment.transform.rotation;
             ironBox.transform.position = Utility.KeepPositionInsideContainer(ironBox, equipment.transform.position, equipment.currentContainer);
             equipment.currentContainer.OccupySpace(ironBox);
+            ironBox.GetComponent<DeleteableGameObject>().onDelete.AddListener(OnIronBoxDeleted);
         }
 
         private void OnIronBoxDeleted(GameObject ironBox)
         {
             //a temporary solution, because there is only one object that can be placed in ironbox
-            onFuelTankDeleted?.Invoke();
+            onBoltCutterDeleted?.Invoke();
         }
 
         private void OnFuelTankDeleted(GameObject fuelTank)
