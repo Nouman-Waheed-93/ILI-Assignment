@@ -50,10 +50,18 @@ namespace FireTruckStoreApp
         {
             SpaceOccupier ironBox = Instantiate(ironBoxPrefab);
             equipment.GetComponent<Collider>().enabled = false;
+            equipment.GetComponent<BoundingBoxRenderer>().Hide();
             ironBox.transform.position = equipment.transform.position;
+            equipment.transform.parent = ironBox.transform;
             ironBox.transform.rotation = equipment.transform.rotation;
             ironBox.transform.position = Utility.KeepPositionInsideContainer(ironBox, equipment.transform.position, equipment.currentContainer);
             equipment.currentContainer.OccupySpace(ironBox);
+        }
+
+        private void OnIronBoxDeleted(GameObject ironBox)
+        {
+            //a temporary solution, because there is only one object that can be placed in ironbox
+            onFuelTankDeleted?.Invoke();
         }
 
         private void OnFuelTankDeleted(GameObject fuelTank)

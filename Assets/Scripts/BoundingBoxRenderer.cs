@@ -35,6 +35,14 @@ namespace FireTruckStoreApp
             SetLinePositions();
         }
 
+        public void Hide()
+        {
+            foreach(LineRenderer line in lines)
+            {
+                line.enabled = false;
+            }
+        }
+
         public void SetRightMaterial()
         {
             ChangeMaterial(BoundingBoxMaterialHandler.singleton.RightPositionMaterial);
